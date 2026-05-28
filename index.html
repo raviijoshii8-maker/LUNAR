@@ -1,0 +1,879 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="lunar">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LUNAR · celestial apparel · moon phase garments</title>
+  <!-- Typography: ethereal serif + cosmic sans -->
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+  <!-- Font Awesome 6 -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --bg: #0f0f1a;
+      --surface: #161622;
+      --surface-elevated: #1e1e2e;
+      --text: #e8e8f0;
+      --text-soft: #a0a0b8;
+      --text-muted: #4a4a60;
+      --accent: #c9a9e6;
+      --accent-glow: #dfc2f5;
+      --accent-deep: #a882c9;
+      --accent-subtle: #2a2438;
+      --border-light: #2a2a3a;
+      --shadow-sm: 0 8px 24px -6px rgba(0,0,0,0.4);
+      --shadow-lg: 0 28px 40px -12px rgba(0,0,0,0.6);
+      --transition: 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+      --radius-card: 28px;
+    }
+
+    [data-theme="lunar-light"] {
+      --bg: #f5f0ff;
+      --surface: #ffffff;
+      --surface-elevated: #faf8ff;
+      --text: #1e1a2e;
+      --text-soft: #7a6a9a;
+      --text-muted: #d0c8e0;
+      --accent: #8b6bbf;
+      --accent-glow: #a88cd4;
+      --accent-deep: #6b4a9e;
+      --accent-subtle: #efe8ff;
+      --border-light: #e2dce8;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      scroll-behavior: smooth;
+      font-weight: 400;
+      line-height: 1.48;
+    }
+
+    ::-webkit-scrollbar { width: 5px; }
+    ::-webkit-scrollbar-track { background: var(--surface-elevated); }
+    ::-webkit-scrollbar-thumb { background: var(--accent); border-radius: 20px; }
+
+    /* header — cosmic */
+    .lunar-header {
+      position: fixed;
+      width: 100%;
+      top: 0;
+      z-index: 1000;
+      background: rgba(15, 15, 26, 0.95);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--accent-subtle);
+      transition: var(--transition);
+    }
+    [data-theme="lunar-light"] .lunar-header {
+      background: rgba(245, 240, 255, 0.95);
+    }
+
+    .nav-container {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 0.9rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 0.8rem;
+    }
+
+    .brand {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 2rem;
+      font-weight: 600;
+      letter-spacing: -0.5px;
+      background: linear-gradient(135deg, var(--accent), var(--accent-glow));
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+    .brand span {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 0.55rem;
+      font-weight: 400;
+      letter-spacing: 3px;
+      color: var(--text-soft);
+      background: none;
+      -webkit-background-clip: unset;
+      background-clip: unset;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 2rem;
+      font-size: 0.68rem;
+      text-transform: uppercase;
+      font-weight: 500;
+      letter-spacing: 2.5px;
+    }
+    .nav-links a {
+      color: var(--text-soft);
+      text-decoration: none;
+      transition: 0.2s;
+      position: relative;
+    }
+    .nav-links a:hover { color: var(--accent); }
+    .nav-links a::after {
+      content: '☾';
+      margin-left: 5px;
+      opacity: 0;
+      transition: 0.2s;
+      font-size: 0.6rem;
+    }
+    .nav-links a:hover::after { opacity: 1; }
+
+    .utility-actions {
+      display: flex;
+      gap: 1.6rem;
+      align-items: center;
+    }
+    #themeToggle {
+      background: none;
+      border: none;
+      font-size: 1.1rem;
+      cursor: pointer;
+      color: var(--text);
+      transition: 0.2s;
+    }
+    .cart-icon {
+      position: relative;
+      cursor: pointer;
+      font-size: 1.2rem;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .cart-icon:hover { color: var(--accent); }
+    .cart-count {
+      background: var(--accent);
+      color: var(--bg);
+      font-size: 0.55rem;
+      font-weight: 700;
+      border-radius: 20px;
+      width: 18px;
+      height: 18px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      position: absolute;
+      top: -8px;
+      right: -14px;
+    }
+
+    /* hero — moon */
+    .hero-lunar {
+      min-height: 92vh;
+      display: flex;
+      align-items: center;
+      position: relative;
+      background-image: url('https://images.unsplash.com/photo-1444703686981-a3abbc4d4fe3?q=80&w=2070&auto=format&fit=crop');
+      background-size: cover;
+      background-position: 50% 30%;
+    }
+    .hero-lunar::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(95deg, rgba(0,0,0,0.45) 0%, rgba(0,0,0,0.25) 70%);
+      z-index: 1;
+    }
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      max-width: 650px;
+      padding: 0 6%;
+    }
+    .hero-sub {
+      font-size: 0.6rem;
+      letter-spacing: 6px;
+      font-weight: 500;
+      margin-bottom: 1rem;
+      color: var(--accent);
+      background: rgba(0,0,0,0.35);
+      backdrop-filter: blur(4px);
+      display: inline-block;
+      padding: 0.3rem 1rem;
+      border-radius: 30px;
+    }
+    .hero-main-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(4rem, 12vw, 7rem);
+      font-weight: 700;
+      line-height: 1;
+      margin-bottom: 0.8rem;
+      color: #ffffff;
+      letter-spacing: -1px;
+    }
+    .hero-offer {
+      font-size: 0.7rem;
+      font-weight: 500;
+      margin-bottom: 2rem;
+      background: rgba(0,0,0,0.35);
+      backdrop-filter: blur(4px);
+      display: inline-block;
+      padding: 0.4rem 1.2rem;
+      border-radius: 30px;
+      border-left: 2px solid var(--accent);
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, var(--accent), var(--accent-deep));
+      border: none;
+      padding: 0.85rem 2.4rem;
+      font-size: 0.68rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 3px;
+      cursor: pointer;
+      transition: var(--transition);
+      display: inline-block;
+      text-decoration: none;
+      color: #fff;
+      border-radius: 50px;
+    }
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 20px rgba(201, 169, 230, 0.3);
+    }
+
+    .collection-badge {
+      max-width: 1400px;
+      margin: 4rem auto 1rem auto;
+      padding: 0 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      flex-wrap: wrap;
+      border-bottom: 1px solid var(--accent-subtle);
+      padding-bottom: 0.8rem;
+    }
+    .collection-badge h2 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.7rem;
+      font-weight: 600;
+      font-style: italic;
+    }
+    .collection-badge p {
+      color: var(--accent);
+      font-size: 0.65rem;
+      letter-spacing: 2px;
+    }
+
+    /* product grid — celestial */
+    .grid-shop {
+      max-width: 1400px;
+      margin: 2rem auto 5rem auto;
+      padding: 0 2rem;
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 2rem;
+    }
+
+    .product-tile {
+      background: var(--surface);
+      border-radius: var(--radius-card);
+      overflow: hidden;
+      transition: var(--transition);
+      box-shadow: var(--shadow-sm);
+      border: 1px solid var(--border-light);
+    }
+    .product-tile:hover { transform: translateY(-8px); box-shadow: var(--shadow-lg); border-color: var(--accent);}
+    .tile-img {
+      position: relative;
+      aspect-ratio: 1 / 1.3;
+      overflow: hidden;
+      background: var(--surface-elevated);
+    }
+    .tile-img img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.6s ease;
+    }
+    .product-tile:hover .tile-img img { transform: scale(1.05); }
+    .quick-add {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: linear-gradient(to top, rgba(0,0,0,0.65), transparent);
+      padding: 1rem;
+      opacity: 0;
+      transition: 0.25s;
+      text-align: center;
+    }
+    .product-tile:hover .quick-add { opacity: 1; }
+    .quick-add button {
+      background: linear-gradient(135deg, var(--accent), var(--accent-deep));
+      border: none;
+      width: 85%;
+      padding: 0.7rem;
+      font-size: 0.6rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      border-radius: 40px;
+      cursor: pointer;
+      transition: 0.2s;
+      color: #fff;
+    }
+    .quick-add button:hover { opacity: 0.9; transform: scale(0.98); }
+    .product-info {
+      padding: 1rem 1rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .product-details h4 {
+      font-size: 0.55rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      color: var(--accent);
+      letter-spacing: 2px;
+    }
+    .product-details h3 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.15rem;
+      font-weight: 600;
+      margin-top: 5px;
+    }
+    .price-block { text-align: right; }
+    .current-price { font-weight: 700; font-size: 1rem; }
+    .old-price { font-size: 0.7rem; text-decoration: line-through; color: var(--text-muted); margin-left: 0.3rem; }
+
+    /* CART SIDEBAR — orbit */
+    .cart-overlay {
+      position: fixed;
+      inset: 0;
+      z-index: 2000;
+      background: rgba(0, 0, 0, 0.94);
+      backdrop-filter: blur(14px);
+      visibility: hidden;
+      opacity: 0;
+      transition: 0.2s ease;
+    }
+    .cart-overlay.active {
+      visibility: visible;
+      opacity: 1;
+    }
+    .cart-sidebar {
+      position: fixed;
+      top: 0;
+      right: 0;
+      width: 100%;
+      max-width: 520px;
+      height: 100vh;
+      background: var(--surface);
+      border-left: 1px solid var(--accent);
+      box-shadow: var(--shadow-lg);
+      z-index: 2001;
+      transform: translateX(100%);
+      transition: transform 0.4s cubic-bezier(0.2, 0.9, 0.4, 1);
+      display: flex;
+      flex-direction: column;
+      border-radius: 32px 0 0 32px;
+    }
+    .cart-overlay.active .cart-sidebar {
+      transform: translateX(0);
+    }
+    .cart-header {
+      padding: 1.5rem;
+      border-bottom: 1px solid var(--border-light);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .cart-header h3 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.7rem;
+      font-weight: 600;
+      color: var(--accent);
+      font-style: italic;
+    }
+    .close-cart {
+      background: none;
+      border: none;
+      font-size: 1.2rem;
+      cursor: pointer;
+      color: var(--text-muted);
+    }
+    .close-cart:hover { color: var(--accent); }
+    .cart-items {
+      flex: 1;
+      overflow-y: auto;
+      padding: 1rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+    .cart-item {
+      display: flex;
+      gap: 1rem;
+      padding: 0.8rem;
+      background: var(--surface-elevated);
+      border-radius: 24px;
+      position: relative;
+      border: 0.5px solid var(--accent-subtle);
+    }
+    .cart-item-img {
+      width: 70px;
+      height: 85px;
+      object-fit: cover;
+      border-radius: 20px;
+    }
+    .cart-item-details {
+      flex: 1;
+    }
+    .cart-item-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1rem;
+      font-weight: 600;
+    }
+    .cart-item-price {
+      font-size: 0.75rem;
+      color: var(--accent);
+      margin-top: 4px;
+      font-weight: 600;
+    }
+    .cart-item-quantity {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-top: 8px;
+    }
+    .quantity-btn {
+      background: var(--accent-subtle);
+      border: none;
+      width: 26px;
+      height: 26px;
+      border-radius: 30px;
+      cursor: pointer;
+      font-weight: 600;
+      color: var(--text);
+    }
+    .quantity-btn:hover { background: var(--accent); color: var(--bg); }
+    .remove-item {
+      position: absolute;
+      top: 12px;
+      right: 12px;
+      background: none;
+      border: none;
+      color: var(--text-muted);
+      cursor: pointer;
+      font-size: 0.8rem;
+    }
+    .remove-item:hover { color: var(--accent);}
+    .cart-footer {
+      padding: 1.5rem;
+      border-top: 1px solid var(--accent);
+      background: var(--surface);
+      border-radius: 0 0 0 32px;
+    }
+    .cart-total {
+      display: flex;
+      justify-content: space-between;
+      font-weight: 700;
+      font-size: 1rem;
+      margin-bottom: 1rem;
+    }
+    .checkout-btn {
+      width: 100%;
+      background: linear-gradient(135deg, var(--accent), var(--accent-deep));
+      border: none;
+      padding: 1rem;
+      border-radius: 50px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      cursor: pointer;
+      transition: 0.2s;
+      color: #fff;
+    }
+    .checkout-btn:hover { opacity: 0.9; transform: scale(0.98); }
+    .empty-cart {
+      text-align: center;
+      color: var(--text-soft);
+      padding: 2rem;
+      font-size: 0.8rem;
+    }
+
+    footer {
+      background: var(--surface-elevated);
+      margin-top: 2rem;
+      padding: 2.5rem 1.5rem;
+      border-top: 1px solid var(--border-light);
+    }
+    .footer-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      text-align: center;
+    }
+    .footer-logo {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 2rem;
+      font-weight: 700;
+      background: linear-gradient(135deg, var(--accent), var(--accent-glow));
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+    .footer-locations {
+      font-size: 0.55rem;
+      letter-spacing: 3px;
+      color: var(--text-soft);
+      margin: 0.8rem 0 1rem;
+    }
+
+    @media (max-width: 780px) {
+      .nav-container { flex-direction: column; padding: 0.7rem; }
+      .nav-links { gap: 1rem; flex-wrap: wrap; justify-content: center; }
+      .grid-shop { gap: 1.2rem; }
+      .cart-sidebar { max-width: 100%; border-radius: 28px 0 0 28px; }
+    }
+
+    /* MODAL — lunar entrance */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      z-index: 2200;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 1rem;
+      background: rgba(0, 0, 0, 0.96);
+      backdrop-filter: blur(24px);
+      transition: opacity 0.25s ease;
+    }
+    .lunar-modal {
+      background: var(--surface);
+      max-width: 540px;
+      width: 100%;
+      border: 1px solid var(--accent);
+      border-radius: 56px;
+      padding: 2.2rem 1.8rem 2.6rem;
+      position: relative;
+      text-align: center;
+      box-shadow: var(--shadow-lg);
+    }
+    .modal-close-icon {
+      position: absolute;
+      top: 1rem;
+      right: 1.4rem;
+      background: none;
+      border: none;
+      font-size: 1.1rem;
+      cursor: pointer;
+      color: var(--text-muted);
+    }
+    .modal-icon-badge {
+      width: 70px;
+      height: 70px;
+      background: rgba(201, 169, 230, 0.1);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 1rem;
+      font-size: 2rem;
+      border-radius: 100px;
+      border: 1px solid var(--accent);
+      color: var(--accent);
+    }
+    .modal-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 3rem;
+      font-weight: 700;
+      background: linear-gradient(135deg, var(--accent), var(--accent-glow));
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      margin-bottom: 0.4rem;
+    }
+    .modal-description {
+      color: var(--text-soft);
+      line-height: 1.5;
+      font-size: 0.85rem;
+      margin: 0.8rem 0;
+    }
+    .modal-buttons {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 1rem;
+      margin-top: 1.5rem;
+    }
+    .btn-modal-primary {
+      background: linear-gradient(135deg, var(--accent), var(--accent-deep));
+      border: none;
+      padding: 0.75rem 2rem;
+      border-radius: 50px;
+      font-weight: 600;
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      cursor: pointer;
+      color: #fff;
+    }
+    .btn-modal-secondary {
+      background: transparent;
+      border: 1px solid var(--accent);
+      padding: 0.75rem 1.8rem;
+      border-radius: 50px;
+      font-weight: 500;
+      font-size: 0.7rem;
+      cursor: pointer;
+      color: var(--text);
+    }
+    .modal-fade-out { opacity: 0; pointer-events: none; transition: opacity 0.2s; }
+  </style>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-SBJZ7C7VV0"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-SBJZ7C7VV0');
+  </script>
+</head>
+<body>
+
+<!-- ENTRY MODAL - LUNAR INVITATION -->
+<div id="entryModal" class="modal-overlay">
+  <div class="lunar-modal">
+    <button id="closeModalBtn" class="modal-close-icon"><i class="fa-regular fa-moon"></i></button>
+    <div class="modal-icon-badge"><i class="fas fa-moon"></i></div>
+    <h2 class="modal-title">LUNAR</h2>
+    <p class="modal-description">Celestial apparel for the moon-bound. Iridescent fabrics, phase-shifting tones, and garments woven with lunar light. Rise with the moon.</p>
+    <div class="modal-buttons">
+      <button id="enterBtn" class="btn-modal-primary">RISE WITH THE MOON</button>
+      <button id="laterBtn" class="btn-modal-secondary">WANDER LATER</button>
+    </div>
+  </div>
+</div>
+
+<header class="lunar-header">
+  <div class="nav-container">
+    <div class="brand">LUNAR<span> · celestial</span></div>
+    <nav class="nav-links">
+      <a href="#shop">PHASES</a>
+      <a href="#shop">IRIDESCENT</a>
+      <a href="#shop">COSMIC</a>
+      <a href="#">LUNAR</a>
+    </nav>
+    <div class="utility-actions">
+      <button id="themeToggle">🌙</button>
+      <div class="cart-icon" id="cartIcon">
+        <i class="fas fa-star-of-life"></i>
+        <span class="cart-count" id="cartCount">0</span>
+      </div>
+    </div>
+  </div>
+</header>
+
+<main>
+  <section class="hero-lunar">
+    <div class="hero-content">
+      <div class="hero-sub">CELESTIAL · LUNAR · PHASE</div>
+      <h1 class="hero-main-title">LUNAR</h1>
+      <div class="hero-offer">First phase: <strong>15% off</strong> your first celestial garment</div>
+      <a href="#shop" class="btn-primary">RISE WITH THE MOON →</a>
+    </div>
+  </section>
+
+  <div class="collection-badge" id="shop">
+    <h2>Celestial Collection · Moon Phase</h2>
+    <p>12 lunar garments</p>
+  </div>
+
+  <div class="grid-shop" id="productGrid"></div>
+</main>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-logo">LUNAR</div>
+    <div class="footer-locations">REYKJAVIK · SEDONA · BANFF · KYOTO</div>
+    <p class="copyright" style="font-size:0.55rem; opacity:0.7;">© 2026 LUNAR — guided by moonlight.</p>
+  </div>
+</footer>
+
+<!-- CART SIDEBAR -->
+<div id="cartOverlay" class="cart-overlay">
+  <div class="cart-sidebar">
+    <div class="cart-header">
+      <h3>LUNAR ORBIT</h3>
+      <button class="close-cart" id="closeCartBtn"><i class="fas fa-times"></i></button>
+    </div>
+    <div class="cart-items" id="cartItemsContainer">
+      <div class="empty-cart">The moon awaits.<br>Add celestial garments.</div>
+    </div>
+    <div class="cart-footer" id="cartFooter" style="display: none;">
+      <div class="cart-total">
+        <span>Total (USD)</span>
+        <span id="cartTotalPrice">$0</span>
+      </div>
+      <button class="checkout-btn" id="checkoutBtn">☾ LUNAR CHECKOUT ☽</button>
+    </div>
+  </div>
+</div>
+
+<script>
+  // LUNAR COLLECTION — celestial apparel, moon phase, iridescent
+  const products = [
+    { id: 1, name: "Moon Phase Hoodie", category: "LAYER", original: 98, discountPrice: 83, img: "https://images.unsplash.com/photo-1556821840-3a63f95609a7?q=80&w=1374&auto=format&fit=crop", alt: "moon hoodie" },
+    { id: 2, name: "Iridescent Kimono", category: "COVER", original: 128, discountPrice: 108, img: "https://images.unsplash.com/photo-1598032895397-b9472444bf53?q=80&w=1465&auto=format&fit=crop", alt: "iridescent kimono" },
+    { id: 3, name: "Stardust Tee", category: "TOP", original: 48, discountPrice: 40, img: "https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?q=80&w=1480&auto=format&fit=crop", alt: "stardust tee" },
+    { id: 4, name: "Constellation Pants", category: "BOTTOM", original: 88, discountPrice: 75, img: "https://images.unsplash.com/photo-1516762689617-e1cffcef479d?q=80&w=1411&auto=format&fit=crop", alt: "constellation pants" },
+    { id: 5, name: "Lunar Glow Jacket", category: "OUTER", original: 168, discountPrice: 142, img: "https://images.unsplash.com/photo-1551488831-00ddcb6c6bd3?q=80&w=1470&auto=format&fit=crop", alt: "lunar jacket" },
+    { id: 6, name: "Crescent Bag", category: "ACCESS", original: 68, discountPrice: 58, img: "https://images.unsplash.com/photo-1594223274512-ad4803739b7c?q=80&w=1287&auto=format&fit=crop", alt: "crescent bag" },
+    { id: 7, name: "Moonstone Necklace", category: "ACCESS", original: 48, discountPrice: 40, img: "https://images.unsplash.com/photo-1611080626919-7cf5a9dbab12?q=80&w=1374&auto=format&fit=crop", alt: "moonstone necklace" },
+    { id: 8, name: "Silk Sleep Mask", category: "ACCESS", original: 38, discountPrice: 32, img: "https://images.unsplash.com/photo-1576871337632-b9aef4c17ab9?q=80&w=1374&auto=format&fit=crop", alt: "sleep mask" },
+    { id: 9, name: "Astral Socks (3pk)", category: "ACCESS", original: 32, discountPrice: 27, img: "https://images.unsplash.com/photo-1586350977771-b3b0abd50c82?q=80&w=1374&auto=format&fit=crop", alt: "astral socks" },
+    { id: 10, name: "Nebula Scarf", category: "ACCESS", original: 58, discountPrice: 49, img: "https://images.unsplash.com/photo-1576871337632-b9aef4c17ab9?q=80&w=1374&auto=format&fit=crop", alt: "nebula scarf" },
+    { id: 11, name: "Cosmic Leggings", category: "BOTTOM", original: 78, discountPrice: 66, img: "https://images.unsplash.com/photo-1516762689617-e1cffcef479d?q=80&w=1411&auto=format&fit=crop", alt: "cosmic leggings" },
+    { id: 12, name: "Moon Dust Beanie", category: "ACCESS", original: 32, discountPrice: 27, img: "https://images.unsplash.com/photo-1576871337632-b9aef4c17ab9?q=80&w=1374&auto=format&fit=crop", alt: "moon beanie" }
+  ];
+
+  let cart = [];
+
+  const cartOverlay = document.getElementById('cartOverlay');
+  const cartIcon = document.getElementById('cartIcon');
+  const closeCartBtn = document.getElementById('closeCartBtn');
+  const cartItemsContainer = document.getElementById('cartItemsContainer');
+  const cartFooter = document.getElementById('cartFooter');
+  const cartTotalPriceSpan = document.getElementById('cartTotalPrice');
+  const cartCountSpan = document.getElementById('cartCount');
+
+  function saveCart() { localStorage.setItem('LUNAR_Cart', JSON.stringify(cart)); }
+  function loadCart() {
+    const saved = localStorage.getItem('LUNAR_Cart');
+    if (saved) { cart = JSON.parse(saved); }
+    renderCartUI();
+    updateCartCount();
+  }
+  function updateCartCount() { cartCountSpan.innerText = cart.reduce((sum,i)=>sum+i.quantity,0); }
+
+  function renderCartUI() {
+    if (!cartItemsContainer) return;
+    if (cart.length === 0) {
+      cartItemsContainer.innerHTML = '<div class="empty-cart">The moon awaits.<br>Add celestial garments.</div>';
+      cartFooter.style.display = 'none';
+      updateCartCount(); saveCart(); return;
+    }
+    cartFooter.style.display = 'block';
+    let html = ''; let total = 0;
+    cart.forEach(item => {
+      total += item.price * item.quantity;
+      html += `<div class="cart-item" data-id="${item.id}">
+          <img class="cart-item-img" src="${item.img}" alt="${item.name}">
+          <div class="cart-item-details">
+            <div class="cart-item-name">${item.name}</div>
+            <div class="cart-item-price">$${item.price.toLocaleString()}</div>
+            <div class="cart-item-quantity">
+              <button class="quantity-btn dec-qty" data-id="${item.id}">-</button>
+              <span class="cart-item-qty">${item.quantity}</span>
+              <button class="quantity-btn inc-qty" data-id="${item.id}">+</button>
+            </div>
+          </div>
+          <button class="remove-item" data-id="${item.id}"><i class="fas fa-trash-alt"></i></button>
+        </div>`;
+    });
+    cartItemsContainer.innerHTML = html;
+    cartTotalPriceSpan.innerText = `$${total.toLocaleString()}`;
+    document.querySelectorAll('.dec-qty').forEach(btn => btn.addEventListener('click', () => updateQuantity(parseInt(btn.dataset.id), -1)));
+    document.querySelectorAll('.inc-qty').forEach(btn => btn.addEventListener('click', () => updateQuantity(parseInt(btn.dataset.id), 1)));
+    document.querySelectorAll('.remove-item').forEach(btn => btn.addEventListener('click', () => removeFromCart(parseInt(btn.dataset.id))));
+    updateCartCount(); saveCart();
+  }
+  function updateQuantity(pid, delta) {
+    const idx = cart.findIndex(i=>i.id===pid);
+    if(idx!==-1){
+      const nq = cart[idx].quantity+delta;
+      if(nq<=0) cart.splice(idx,1);
+      else cart[idx].quantity = nq;
+      renderCartUI();
+    }
+  }
+  function removeFromCart(pid){ cart = cart.filter(i=>i.id!==pid); renderCartUI(); }
+  function addToCart(pid){
+    const prod = products.find(p=>p.id===pid);
+    if(!prod) return;
+    const existing = cart.find(i=>i.id===pid);
+    if(existing) existing.quantity+=1;
+    else cart.push({id:prod.id, name:prod.name, price:prod.discountPrice, quantity:1, img:prod.img});
+    renderCartUI();
+    const btn = document.querySelector(`.add-btn-${pid}`);
+    if(btn){ let old = btn.innerText; btn.innerText="✓ LUNAR"; setTimeout(()=>btn.innerText=old,700);}
+    cartOverlay.classList.add('active');
+  }
+
+  function renderProducts() {
+    const container = document.getElementById('productGrid');
+    if(!container) return;
+    container.innerHTML='';
+    products.forEach(p=>{
+      const disc = Math.round(((p.original-p.discountPrice)/p.original)*100);
+      const card=document.createElement('div');
+      card.className='product-tile';
+      card.innerHTML=`
+        <div class="tile-img">
+          <img src="${p.img}" alt="${p.alt||p.name}" loading="lazy">
+          <div class="quick-add"><button class="add-btn-${p.id} add-to-cart-btn" data-id="${p.id}">☾ ADD TO LUNAR</button></div>
+        </div>
+        <div class="product-info">
+          <div class="product-details"><h4>${p.category}</h4><h3>${p.name}</h3></div>
+          <div class="price-block"><span class="current-price">$${p.discountPrice.toLocaleString()}</span><span class="old-price">$${p.original.toLocaleString()}</span><span style="font-size:0.55rem;color:var(--accent);display:block;text-align:right;">-${disc}%</span></div>
+        </div>`;
+      container.appendChild(card);
+    });
+    document.querySelectorAll('.add-to-cart-btn').forEach(btn=>btn.addEventListener('click',(e)=>{e.preventDefault(); addToCart(parseInt(btn.dataset.id));}));
+  }
+
+  // theme
+  function initTheme(){
+    const stored = localStorage.getItem('LUNAR_theme');
+    const systemDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    let theme = stored || (systemDark ? 'dark' : 'light');
+    document.documentElement.setAttribute('data-theme', theme === 'dark' ? 'lunar' : 'lunar-light');
+    const toggle = document.getElementById('themeToggle');
+    if(toggle) toggle.textContent = theme === 'dark' ? '☀️' : '🌙';
+  }
+  function toggleThemeUI(){
+    const curr = document.documentElement.getAttribute('data-theme');
+    const next = curr === 'lunar' ? 'lunar-light' : 'lunar';
+    document.documentElement.setAttribute('data-theme', next);
+    localStorage.setItem('LUNAR_theme', next === 'lunar' ? 'dark' : 'light');
+    const toggleBtn = document.getElementById('themeToggle');
+    if(toggleBtn) toggleBtn.textContent = next === 'lunar' ? '☀️' : '🌙';
+  }
+
+  // modal entry
+  const modalDiv = document.getElementById('entryModal');
+  const enterBtn = document.getElementById('enterBtn'), laterBtn = document.getElementById('laterBtn'), closeModalBtn = document.getElementById('closeModalBtn');
+  function closeModalFunc(){ if(modalDiv){ modalDiv.classList.add('modal-fade-out'); setTimeout(()=>modalDiv.style.display='none',200); } }
+  if(enterBtn) enterBtn.addEventListener('click',closeModalFunc);
+  if(laterBtn) laterBtn.addEventListener('click',closeModalFunc);
+  if(closeModalBtn) closeModalBtn.addEventListener('click',closeModalFunc);
+  if(modalDiv) modalDiv.addEventListener('click',(e)=>{ if(e.target===modalDiv) closeModalFunc(); });
+
+  // cart events
+  cartIcon?.addEventListener('click',()=>cartOverlay.classList.add('active'));
+  closeCartBtn?.addEventListener('click',()=>cartOverlay.classList.remove('active'));
+  cartOverlay?.addEventListener('click',(e)=>{ if(e.target===cartOverlay) cartOverlay.classList.remove('active'); });
+  document.getElementById('checkoutBtn')?.addEventListener('click',()=>{ alert('Thank you for rising with the moon. Your celestial garments are guided by lunar light.'); cart=[]; renderCartUI(); cartOverlay.classList.remove('active'); });
+  document.querySelectorAll('a[href^="#"]').forEach(a=>{ a.addEventListener('click',function(e){ const t=this.getAttribute('href'); if(t==="#") return; const sec=document.querySelector(t); if(sec){ e.preventDefault(); sec.scrollIntoView({behavior:'smooth'}); } }); });
+
+  renderProducts();
+  initTheme();
+  loadCart();
+  document.getElementById('themeToggle')?.addEventListener('click', toggleThemeUI);
+</script>
+</body>
+</html>
